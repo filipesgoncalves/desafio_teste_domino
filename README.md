@@ -42,7 +42,7 @@ O arquivo tem três partes:
 | Peças | 28 peças diferentes, 7 carroças, soma total de 168 pontos, 1-6 é a mesma peça que 6-1 |
 | Distribuição | 7 peças por jogador e 14 no monte, nenhuma repetida, mesma semente dá a mesma distribuição, cenário inválido recusado |
 | Quem começa | Maior carroça abre a mesa, carroça menor quando não há 6-6, maior soma quando não há carroça, primeira jogada obrigatória |
-| Jogadas | Encaixe e orientação da peça nas pontas, peça que não encaixa, lado escolhido automaticamente, peça que não é do jogador, alternância da vez, lista de jogadas possíveis |
+| Jogadas | Encaixe e orientação da peça nas pontas, peça que não encaixa, lado escolhido automaticamente, lado inválido recusado também na primeira jogada, peça que não é do jogador, alternância da vez, lista de jogadas possíveis |
 | Compra e passe | Compra até ter jogada, quem tem jogada não compra nem passa, não passa com monte cheio, passa com monte vazio |
 | Fim da partida | Batida com contagem de pontos, jogo trancado com vencedor, empate, contagem de passes zerada por uma jogada, mesa inválida, nada é aceito depois do fim |
 | Partida simulada | Partidas sorteadas jogadas até o fim, conferindo a cada ação que as 28 peças continuam no jogo e, no fim, o resultado e a mesa |
@@ -52,3 +52,4 @@ Cada teste monta a própria partida, faz as jogadas e confere a mesa, as mãos, 
 ## Colaborador
 
 - Filipe ([filipesgoncalves](https://github.com/filipesgoncalves))
+- Thiago ([Chizuli](https://github.com/Chizuli))
