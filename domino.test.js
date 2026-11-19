@@ -348,6 +348,14 @@ describe('Quem começa', () => {
     expect(jogo.pecaInicial).toEqual([5, 6]);
   });
 
+  test('com empate na maior soma, começa a peça com o maior número', () => {
+    const j1 = [[0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [4, 5]];
+    const j2 = [[1, 2], [1, 3], [1, 4], [1, 5], [1, 6], [2, 3], [3, 6]];
+    const jogo = new Domino({ maos: [j1, j2] });
+    expect(jogo.vez).toBe(1);
+    expect(jogo.pecaInicial).toEqual([3, 6]);
+  });
+
   test('a primeira jogada tem de ser a peça de abertura', () => {
     const jogo = partidaFixa();
     expect(() => jogo.jogar([6, 5])).toThrow('A primeira peça deve ser 6-6');
@@ -487,6 +495,16 @@ describe('Fim da partida', () => {
     jogo.passar(); // Bruno
     expect(jogo.estado).toBe('fim');
     expect(jogo.resultado).toEqual({ motivo: 'trancado', vencedor: 'Ana', pontos: 86 });
+  });
+
+  test('jogo trancado: o segundo jogador também pode vencer', () => {
+    const resto = criarPecas().filter((p) => !MESA_TRANCADA.some((m) => chave(m) === chave(p)));
+    const bruno = [[0, 0], [0, 2], [1, 1]];
+    const ana = resto.filter((p) => !bruno.some((b) => chave(b) === chave(p)));
+    const jogo = new Domino({ nomes: ['Ana', 'Bruno'], maos: [ana, bruno], monte: [], mesa: MESA_TRANCADA, vez: 0 });
+    jogo.passar();
+    jogo.passar();
+    expect(jogo.resultado).toEqual({ motivo: 'trancado', vencedor: 'Bruno', pontos: 86 });
   });
 
   test('jogo trancado com pontos iguais termina empatado', () => {
