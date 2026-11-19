@@ -149,6 +149,7 @@ class Domino {
     const jogador = this.jogadorDaVez;
     const indice = jogador.mao.findIndex((p) => chave(p) === chave(peca));
     if (indice === -1) throw new Error(`A peça ${chave(peca)} não está na mão de ${jogador.nome}`);
+    if (lado !== undefined && lado !== 'esquerda' && lado !== 'direita') throw new Error('Lado deve ser "esquerda" ou "direita"');
 
     if (this.mesa.length === 0) {
       if (chave(peca) !== chave(this.pecaInicial)) {
@@ -159,7 +160,6 @@ class Domino {
       const { esquerda, direita } = this.pontas;
       const [a, b] = peca;
       if (lado === undefined) lado = peca.includes(direita) ? 'direita' : 'esquerda';
-      if (lado !== 'esquerda' && lado !== 'direita') throw new Error('Lado deve ser "esquerda" ou "direita"');
       const ponta = lado === 'direita' ? direita : esquerda;
       if (!peca.includes(ponta)) throw new Error(`A peça ${chave(peca)} não encaixa na ponta ${lado} (${ponta})`);
       if (lado === 'direita') this.mesa.push(a === ponta ? [a, b] : [b, a]);
@@ -383,6 +383,13 @@ describe('Jogadas', () => {
     jogo.jogar([6, 4]);
     jogo.jogar([3, 4]); // só encaixa na direita (4)
     expect(jogo.visualizarMesa()).toBe('[6|6][6|4][4|3]');
+  });
+
+  test('lado diferente de esquerda ou direita é recusado também na primeira jogada', () => {
+    const jogo = partidaFixa();
+    expect(() => jogo.jogar([6, 6], 'meio')).toThrow('Lado deve ser "esquerda" ou "direita"');
+    expect(jogo.mesa).toHaveLength(0);
+    expect(jogo.jogadorDaVez.nome).toBe('Ana');
   });
 
   test('ninguém joga peça que não está na própria mão', () => {
